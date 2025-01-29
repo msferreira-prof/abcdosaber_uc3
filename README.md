@@ -7,9 +7,9 @@ Seu objetivo é fornecer aos alunos da unidade curricular correspondente, tutori
 
 Para instalar o projeto, utilize o MS Visual Studio Code e siga os seguintes passos:
 
-* Clonar o projeto. 
-* Criar um ambiente (environment) Python.
-* Instalar no ambiente os respectivos pacotes envolvidos no projeto.
+1. Clonar o projeto. 
+2. Criar um ambiente (environment) Python.
+3. Instalar no ambiente os respectivos pacotes envolvidos no projeto.
 
 > O ambiente virtual (environment) permite que você utilize diferentes versões do Python e/ou de módulos Python, permitindo, por exemplo, avaliar o comportamento de projeto nas versões instaladas.
 
