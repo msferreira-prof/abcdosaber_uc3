@@ -3,9 +3,17 @@
 Este é um projeto criado com o framework Django.
 Seu objetivo é fornecer aos alunos da unidade curricular correspondente, tutoria e apoio para o desenvolvimento das respectivas competências da unidade.
 
-## Instalação
+### Instalação
 
-Para instalar o projeto, basta utilizar o MS Visual Studio Code e criar um ambiente Python com os respectivos pacotes envolvidos no projeto.
+Para instalar o projeto, utilize o MS Visual Studio Code e siga os seguintes passos:
+
+* Clonar o projeto. 
+* Criar um ambiente (environment) Python.
+* Instalar no ambiente os respectivos pacotes envolvidos no projeto.
+
+> O ambiente virtual (environment) permite que você utilize diferentes versões do Python e/ou de módulos Python, permitindo, por exemplo, avaliar o comportamento de projeto nas versões instaladas.
+
+> Os pacotes envolvidos no projeto podem ser encontrados no arquivo "requirements.txt".
 
 ### Criando um ambiente (environment) para o projeto
 
@@ -26,9 +34,8 @@ Para ativar o ambiente (environment), digite o comando abaixo no terminal do VS 
 Para desativar o ambiente (environment), digite o comando abaixo no terminal do VS Code.
 
 ```bash
-dactivate
+deactivate
 ```
-
 
 ## Licença
 
