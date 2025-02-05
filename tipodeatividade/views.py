@@ -8,3 +8,7 @@ def index(request):
 def listar(request):
     return HttpResponse("Lista de Tipos de Atividade")
     
+def show_mensagem(request):
+    x = "M"
+    nome = x + "arcos, tudo bem?"
+    return HttpResponse(f"Bom dia!{nome}")   
