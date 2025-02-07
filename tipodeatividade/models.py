@@ -5,7 +5,7 @@ from django.urls import reverse
 class TipoDeAtividade(models.Model):
     codigo = models.IntegerField(primary_key=True, 
                                  help_text='Código do Tipo de Atividade')
-    descricao = models.CharField(max_length=70, null=False,
+    descricao = models.CharField(max_length=100, null=False,
                                  help_text='Informe a descrição do Tipo de Atividade')
 
     def __str__(self):
