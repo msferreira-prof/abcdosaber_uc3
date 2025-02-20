@@ -6,4 +6,8 @@ from aluno.models import Aluno
 # Create your views here.
 def listar(request):
     lista_aluno = Aluno.objects.all()
-    return HttpResponse(lista_aluno)
+    contexto = {
+        'alunos': lista_aluno,
+    }
+    
+    return render(request, 'aluno/listarAluno.html', context=contexto)

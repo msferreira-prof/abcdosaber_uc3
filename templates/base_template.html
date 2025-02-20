@@ -3,7 +3,7 @@
 
 <head>
     {% block title %}
-
+        <title></title>
     {% endblock %}
     
     <meta charset="utf-8">
@@ -56,7 +56,7 @@
                     <a href="./escola.html" class="nav-link">Início</a>
                     <a href="./tipoatividade/cadastroTiposAtividade.html" class="nav-link">Tipos de Atividade</a>
                     <a href="./titulo/cadastroTitulos.html" class="nav-link">Títulos</a>
-                    <a href="./aluno/cadastroAluno.html" class="nav-link">Alunos</a>
+                    <a href="{% url 'aluno:listar' %}" class="nav-link">Alunos</a>
                     <a href="./instrutor/cadastroInstrutor.html" class="nav-link">Instrutor</a>
                     <a href="./turma/cadastroTurma.html" class="nav-link">Turmas</a>
                     <a href="./contato/contato.html" class="nav-link">Contato</a>
@@ -65,13 +65,13 @@
         </nav>
 
         {% block titulo_pagina %}
-
+            <div></div>
         {% endblock %}
 
     </header>
 
     {% block corpo %}
-
+        <main></main>
     {% endblock %}
 
     <footer class="container text-center">
