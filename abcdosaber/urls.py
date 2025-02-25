@@ -28,8 +28,8 @@ urlpatterns = [
     path('instrutor/', include('instrutor.urls')),
     path('aluno/', include('aluno.urls', namespace='aluno')),
     path('turma/', include('turma.urls')),
-    path('titulo/', include('titulo.urls')),
-    path('', TemplateView.as_view(template_name="escola.html"))
+    path('titulo/', include('titulo.urls', namespace='titulo')),
+    path('', TemplateView.as_view(template_name="escola.html")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
