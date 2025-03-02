@@ -7,13 +7,13 @@
 {% block menu %}
 <div class="collapse navbar-collapse justify-content-end" id="mynavbar">
     <div class="navbar-nav">
-        <a href="./escola.html" class="nav-link">Início</a>
-        <a href="{% url 'tipodeatividade:listar' %}" class="nav-link">Tipos de Atividade</a>
+        <a href="/" class="nav-link">Início</a>
+        <a href="{% url 'tipodeatividade:cadastro' %}" class="nav-link">Tipos de Atividade</a>
         <a href="{% url 'titulo:cadastro' %}" class="nav-link">Títulos</a>
-        <a href="{% url 'aluno:listar' %}" class="nav-link">Alunos</a>
+        <a href="{% url 'aluno:cadastro' %}" class="nav-link">Alunos</a>
         <a href="{% url 'instrutor:cadastro' %}" class="nav-link">Instrutor</a>
-        <a href="./turma/cadastroTurma.html" class="nav-link">Turmas</a>
-        <a href="./contato/contato.html" class="nav-link">Contato</a>
+        <a href="{% url 'turma:cadastro' %}" class="nav-link">Turmas</a>
+        <a href="{% url 'utilitarios:contato' %}" class="nav-link">Contato</a>
     </div>
 </div>
 {% endblock %}

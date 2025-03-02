@@ -28,8 +28,11 @@ def cadastrar(request):
         dados_instrutor = form.cleaned_data
         
         # recuperando o objeto Titulo com a chave primaria informada no formulario do instrutor
-        titulo = Titulo.objects.get(pk=dados_instrutor["codigo_titulo"])
-        
+        # se vier zero do formulario, é porque o titulo nao foi selecionado e o objeto titulo sera None
+        titulo = None
+        if dados_instrutor["codigo_titulo"] != "0":
+            titulo = Titulo.objects.get(pk=dados_instrutor["codigo_titulo"])
+                
         instrutor = Instrutor(
             rg = dados_instrutor["rg"],
             nome = dados_instrutor["nome"],
@@ -38,6 +41,7 @@ def cadastrar(request):
             ddd = dados_instrutor["ddd"],
             codigo_titulo = titulo,
         )
+        
         instrutor.save()
     
     lista_titulos = Titulo.objects.all()

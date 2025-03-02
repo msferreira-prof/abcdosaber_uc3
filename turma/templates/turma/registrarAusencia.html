@@ -1,0 +1,99 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+    <title>Django - Exercícios</title>
+{% endblock  %}
+
+{% block menu %}
+ <!-- menu -->
+ <div class="collapse navbar-collapse justify-content-end" id="mynavbar">
+    <div class="navbar-nav">
+        <a href="/" class="nav-link">Início</a>
+        <a href="{% url 'turma:cadastro' %}" class="nav-link">Cadastrar</a>
+        <a href="{% url 'turma:listar' %}" class="nav-link">Listar</a>
+        <a href="{% url 'turma:ausencia' %}" class="nav-link">Registrar Ausência</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block corpo %}
+<main class="container m-2 w-75 mx-auto my-font-family">
+
+    <div class="row">
+        <div class="col text-center m-0">
+            <h2 class="mt-2 mb-5 my-h2">Registro de Ausências</h2>
+        </div>
+    </div>
+
+    {% if turmas %}
+
+        <!-- formulario para escolher a turma -->
+        <form name="frmDefinirTurma" id="idFrmDefinirTurma" action="{% url 'carregar_ausencia_turma_alunos' %}" method="post" class="my-label-color-purple">
+            {% csrf_token %}
+
+            <!-- montagem do combo com as turmas cadastradas que tenha aluno -->
+            <div class="form-group">
+                <label for="idTurma">Turma</label>
+                <select class="form-control" id="idTurma" name="numero_turma">
+                    <option value="0">Selecione...</option>
+                    {% for turma in turmas %}                
+                        <option value="{{ turma }}">Turma {{ turma.numeroTurma }} - {{ turma.horario_aula|time:"h:m:s"}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group my-4 text-center">
+                <input type="button" value="Limpar" class="btn btn-primary btn-md" id="idLimparTurmas">
+                <input type="submit" value="Consultar" class="btn btn-primary btn-md">
+            </div>
+
+        </form>
+
+        {% if turma_alunos %}
+            <!-- formulario HTML para registrar ausencia de alunos de uma turma -->
+            <form name="frmRegistrarAusencia" action="{% url 'turma:registrar_ausencia' %}" method="post" class="my-label-color-purple">
+
+                <!-- utiliza um input "hidden" para armazerar a turma escolhida inicialmente -->
+                <input type="hidden" name="numero_turma" value="{{ numero_turma }}">
+
+                <!-- montagem do combo com os tipos de atividade -->
+                <div class="form-group">
+                    <label for="idAlunoTurma">Aluno da Turma</label>
+                    <select class="form-control" id="idAlunoTurma" name="matricula_aluno">
+                        <option value="0">Selecione...</option>
+                        {% for aluno in turma_alunos %}
+                            <option value="{{ aluno.maricula }}">{{ aluno.nome}} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="idDataAusencia" class="col-form-label">Data da Ausência</label>
+                    <input class="form-control" type="date" id="idDataAusencia" name="data_ausencia" required>
+                </div>
+
+                <div class="form-group my-4 text-center">
+                    <input type="reset" value="Limpar" class="btn btn-primary btn-md">
+                    <input type="submit" value="Registrar" class="btn btn-primary btn-md">
+                </div>
+            </form>
+        
+        {% else %}
+
+            <div class="text-danger">
+                <p>Não há alunos cadastrados na turma selecionada</p>
+            </div>
+
+        {% endif %}
+    
+    {% else %}
+
+        <div class="text-danger">
+            <p>Não há turmas cadastradas</p>
+        </div>
+
+    {% endif %}
+
+</main>
+{% endblock %}

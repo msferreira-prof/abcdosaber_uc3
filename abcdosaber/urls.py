@@ -24,12 +24,14 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('', TemplateView.as_view(template_name="escola.html")),
     path('tipodeatividade/', include('tipodeatividade.urls')),
     path('instrutor/', include('instrutor.urls')),
     path('aluno/', include('aluno.urls', namespace='aluno')),
-    path('turma/', include('turma.urls')),
+    path('turma/', include('turma.urls', namespace='turma')),
     path('titulo/', include('titulo.urls', namespace='titulo')),
-    path('', TemplateView.as_view(template_name="escola.html")),
+    path('utilitarios/', include('utilitarios.urls', namespace='utilitarios')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

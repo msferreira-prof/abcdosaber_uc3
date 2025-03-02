@@ -17,6 +17,7 @@ def listar(request):
 def carregar_cadastro(request):
     return render(request, 'titulo/cadastrarTitulo.html')
 
+
 def cadastrar(request):
     form = TituloForm(request.POST)
     if form.is_valid():
