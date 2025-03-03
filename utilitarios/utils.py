@@ -50,8 +50,7 @@ def apagar_registros():
         Titulo.objects.all().delete()
     if TipoDeAtividade.objects.exists():
         TipoDeAtividade.objects.all().delete()
-   
-    return
+
              
 # truncar tabelas para zerar o contador de auto-incremento
 def truncate_table(table_name):
@@ -68,7 +67,6 @@ def truncar_tabelas():
     truncate_table('aluno_aluno')
     truncate_table('titulo_titulo')
     truncate_table('tipodeatividade_tipodeatividade')
-    return
 
 
 # popular tabelas
@@ -80,7 +78,6 @@ def popular_tipodeatividade():
         lista_tipodeatividade.append(TipoDeAtividade(descricao='Atividade ' + f'{i:02}'))
         
     TipoDeAtividade.objects.bulk_create(lista_tipodeatividade)
-    return
 
 
 def popular_titulo():
@@ -91,7 +88,6 @@ def popular_titulo():
         lista_titulo.append(Titulo(descricao='Titulo ' + f'{i:02}'))
         
     Titulo.objects.bulk_create(lista_titulo)
-    return
 
 
 def popular_aluno():
@@ -108,7 +104,6 @@ def popular_aluno():
         )
         
     Aluno.objects.bulk_create(lista_aluno)
-    return
 
 
 def popular_instrutor():
@@ -131,7 +126,6 @@ def popular_instrutor():
         )
         
     Instrutor.objects.bulk_create(lista_instrutor)
-    return
     
     
 def popular_turma():
@@ -156,7 +150,6 @@ def popular_turma():
         )
         
     Turma.objects.bulk_create(lista_turma)
-    return
     
 
 def popular_turma_aluno():
@@ -167,9 +160,18 @@ def popular_turma_aluno():
         
         turma = Turma.objects.get(pk=gerar_numero_aleatorio_sequencia(Turma.objects.values_list('numero', flat=True)))
         
+        alunos = []
+        
         for j in range(1, 5):
             aluno = Aluno.objects.get(pk=gerar_numero_aleatorio_sequencia(Aluno.objects.values_list('matricula', flat=True)))
-                
+            
+            # eliminando duplicidade de aluno na mesma turma
+            if aluno not in alunos:
+                alunos.append(aluno)
+            else:
+                alunos.remove(aluno)
+            
+        for aluno in alunos:    
             lista_turma_aluno.append(
                 TurmaAluno(
                     numero_turma = turma,
@@ -177,9 +179,9 @@ def popular_turma_aluno():
                     data_inicio_matricula = turma.data_inicial,
                 )
             )
-            
+                
     TurmaAluno.objects.bulk_create(lista_turma_aluno)
-    return
+
 
 def popular_turma_ausencia():
 
@@ -187,16 +189,23 @@ def popular_turma_ausencia():
     
     for i in range(1, 10):
         turma_aluno = TurmaAluno.objects.get(pk=gerar_numero_aleatorio_sequencia(TurmaAluno.objects.values_list('id', flat=True)))
-        alunos = turma_aluno.alunos_turmas.all()
         
-        for aluno in alunos:
-            lista_ausencia.append(
-                Ausencia (
-                    numero_turma = turma_aluno,
-                    matricula_aluno = aluno, 
-                    data_ausencia = turma_aluno.numero_turma.data_inicial + timedelta(days=i),
-                )
-            )
+        a = turma_aluno.get(pk=1)        
+        print('alunos')
+        print()
+        print(a)
         
-    Ausencia.objects.bulk_create(lista_ausencia)
-    return
+        # alunos = turma_aluno.matricula_aluno.all()
+        
+        # for aluno in alunos:
+            
+        #     ausencia = Ausencia (
+        #             numero_turma = turma_aluno,
+        #             matricula_aluno = aluno, 
+        #             data_ausencia = turma_aluno.numero_turma.data_inicial + timedelta(days=i),
+        #         )
+            
+        #     lista_ausencia.append(ausencia)
+  
+    print(lista_ausencia)          
+# Ausencia.objects.bulk_create(lista_ausencia)

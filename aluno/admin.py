@@ -3,4 +3,8 @@ from aluno.models import Aluno
 
 
 # Register your models here.
-admin.site.register(Aluno)
+# configura a tabela apresentada no app Admin
+class AlunoAdmin(admin.ModelAdmin):
+    list_display = ('matricula', 'nome', 'data_inicial', 'data_final')
+
+admin.site.register(Aluno, AlunoAdmin)

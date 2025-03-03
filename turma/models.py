@@ -21,7 +21,7 @@ class Turma(models.Model):
         ordering = ['numero']
         
     def __str__(self):
-        return f'Turma: {self.numero} - Instrutor: {self.id_instrutor.nome} - Monitor: {self.matricula_monitor.nome}'
+        return f'Turma: {self.numero}'
     
 class TurmaAluno(models.Model):
     numero_turma =  models.ForeignKey(Turma, on_delete=models.CASCADE, related_name='turmas_alunos',
@@ -35,7 +35,7 @@ class TurmaAluno(models.Model):
                                           help_text="Data de fim de matrícula do aluno na turma")    
 
     class Meta:
-        ordering = ['numero_turma', 'matricula_aluno'] 
+        ordering = ['numero_turma', 'matricula_aluno', 'id'] 
         
             
     def __str__(self):
@@ -51,6 +51,10 @@ class Ausencia(models.Model):
     data_ausencia = models.DateField(null=False,
                                      default=timezone.now,
                                      help_text="Data da falta do aluno na turma")
+
+
+    class Meta:
+        ordering = ['numero_turma', 'matricula_aluno', 'id'] 
 
     def __str__(self):
         resposta = f'Turma: {self.numero_turma} - Aluno: {self.matricula_aluno} - Dt Ausência: {self.data_ausencia.strftime("%d/%m/%y")}'
