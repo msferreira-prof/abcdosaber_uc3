@@ -37,9 +37,9 @@ def cadastrar(request):
         
         # recuperando o objeto Titulo com a chave primaria informada no formulario do instrutor
         # se vier zero do formulario, é porque o titulo nao foi selecionado e o objeto titulo sera None
-        tipoDeAtividade = None
+        tipo_de_atividade = None
         if dados_turma["codigo_atividade"] != "0":
-            tipoDeAtividade = TipoDeAtividade.objects.get(pk=dados_turma["codigo_atividade"])
+            tipo_de_atividade = TipoDeAtividade.objects.get(pk=dados_turma["codigo_atividade"])
                 
         instrutor = None
         if dados_turma["id_instrutor"] != "0":
@@ -54,7 +54,7 @@ def cadastrar(request):
             duracao_aula = dados_turma["duracao_aula"],
             data_inicial = dados_turma["data_inicial"],
             data_final = dados_turma["data_final"],
-            codigo_atividade = tipoDeAtividade,
+            codigo_atividade = tipo_de_atividade,
             matricula_monitor = aluno,
             id_instrutor = instrutor,
         )

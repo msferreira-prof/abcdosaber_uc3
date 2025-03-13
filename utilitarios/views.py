@@ -15,7 +15,7 @@ def popular_bd(request):
     utils.popular_instrutor()
     utils.popular_turma()
     utils.popular_turma_aluno()
-    #utils.popular_turma_ausencia()
+    utils.popular_turma_ausencia()
         
     return redirect('/')
 

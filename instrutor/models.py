@@ -14,5 +14,9 @@ class Instrutor(models.Model):
     ddd = models.CharField(max_length=3, help_text="Informe o ddd do telefone do Instrutor")
     codigo_titulo = models.ForeignKey(Titulo, null=True, blank=True, related_name='titulos', on_delete=models.SET_NULL, db_column="titulo_codigo")
 
+    class Meta:
+        ordering = ['id']
+        
+
     def __str__(self):
         return f'{self.id} - {self.nome}'
