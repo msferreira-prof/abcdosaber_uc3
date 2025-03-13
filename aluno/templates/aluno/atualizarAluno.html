@@ -1,0 +1,62 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+    <title>Django - Exercícios</title>
+{% endblock  %}
+
+{% block menu %}
+<div class="collapse navbar-collapse justify-content-end" id="mynavbar">
+    <div class="navbar-nav">
+        <a href="/" class="nav-link">Início</a>
+        <a href="{% url 'aluno:cadastro' %}" class="nav-link">Cadastrar</a>
+        <a href="{% url 'aluno:listar' %}" class="nav-link">Listar</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block corpo %}
+<!-- main -->
+<main class="container m-2 w-75 mx-auto my-font-family">
+
+    <div class="row">
+        <div class="col text-center m-0">
+            <h2 class="mt-2 mb-5 my-h2">Atualização de Aluno</h2>
+        </div>
+    </div>
+
+    <!-- formulario HTML -->
+    <form name="AlunoAtualizarForm" action="{% url 'aluno:atualizar_aluno' %}" method="post" class="my-label-color-purple">{% csrf_token %}
+        {% csrf_token %}
+
+        <input type="hidden" id="idMatriculaAluno" name="matricula" value="{{ aluno.matricula }}">  
+
+        <div class="form-group">
+            <label for="idMatricula" class="col-form-label">Matrícula</label>
+            <input class="form-control" type="text" id="idMatricula" name="matricula" maxlength="45" value="{{ aluno.matricula }}" readonly>  
+        </div>
+
+        <div class="form-group">
+            <label for="idNome">Nome</label>
+            <input class="form-control" type="text" id="idNome" name="nome" value="{{ aluno.nome }}" maxlength="70" required> 
+        </div>
+        
+        <div class="form-group">
+            <label for="idDataInicial">Data de Matrícula na Escola</label>
+            <input class="form-control" type="date" id="idDataInicial" name="data_inicial" value="{{ aluno.data_inicial|date:"Y-m-d" }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="idDataFinal">Data de Saída da Escola</label>
+            <input class="form-control" type="date" id="idDataFinal" name="data_final" value="{{ aluno.data_final|date:"Y-m-d" }}">
+        </div>
+        
+        <div class="form-group my-4 text-center">
+            <input type="reset" value="Limpar" class="btn btn-primary btn-md">
+            <input type="submit" value="Atualizar" class="btn btn-primary btn-md">
+        </div>
+
+    </form>
+
+</main>
+
+{% endblock %}

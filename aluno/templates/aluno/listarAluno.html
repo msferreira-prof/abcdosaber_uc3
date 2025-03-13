@@ -49,6 +49,7 @@
                         <th>Data Matrícula</th>
                         <th>Data Saída</th>
                         <th>Aluno Monitor</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
 
@@ -59,8 +60,21 @@
                         <td class="text-center"> {{ aluno.matricula }} </td>
                         <td class="text-left"> {{ aluno.nome }} </td>
                         <td> {{ aluno.data_inicial|date:"d/m/Y" }} </td>
-                        <td> {% if aluno.data_final %} {{ aluno.data_final|date:"d/m/Y" }} {% else %} --- {% endif %}</td>
+                        <td> 
+                            {% if aluno.data_final %} 
+                                {{ aluno.data_final|date:"d/m/Y" }}
+                            {% else %} 
+                                <i class="fas fa-minus"></i> 
+                            {% endif %}
+                        </td>
                         <td> {% if aluno.turmas %} {{ 'Sim' }} {% else %} {{ 'Não' }} {% endif %}</td>
+                        <td>
+                            <a href="{% url 'aluno:carregar_aluno' aluno.matricula %}" class="btn btn-mini"><i class="far fa-edit"></i></a>
+                            <button type="button" class="btn" role="button" data-target="#modalExcluirAluno"
+                                    data-toggle="modal"  data-nome="{{ aluno.nome }}" data-url="{% url 'aluno:excluir_aluno' aluno.matricula %}">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </td>
                     </tr>
                 
                 {% endfor %}
@@ -79,4 +93,54 @@
 
 </main>
 
+
+<!-- Modais -->
+<div class="modal fade" id="modalExcluirAluno" role="dialog" aria-labelledby="Confirmação" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+        
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <p id="mensagemExclusao"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnExcluir">Excluir</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 {% endblock %}
+
+{% block javascript_complementar %}
+    <!-- Prepara o modal com os dados da imagem do aluno a ser excluido -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#modalExcluirAluno').on('show.bs.modal', function(event) {
+                var nomeAluno = $(event.relatedTarget).data('nome');
+                var urlExcluir = $(event.relatedTarget).data('url');
+                $("#mensagemExclusao").text("Aluno [  " + nomeAluno + "  ]?");
+
+                $.fn.excluirAluno = function() {
+                    var url = $(event.relatedTarget).data('url');
+                    location.replace(url);
+                }
+            });
+        
+            $("#btnExcluir").on('click', function() {
+                $.fn.excluirAluno();
+                return false;
+            });            
+        });
+    </script>
+{% endblock javascript_complementar %}

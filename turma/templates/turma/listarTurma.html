@@ -67,11 +67,21 @@
                         <td> {{ t.horario_aula }} </td>
                         <td> {{ t.duracao_aula }} min </td>
                         <td> {{ t.data_inicial|date:"d/m/Y" }} </td>
-                        <td> {% if t.data_final %} {{ t.data_final|date:"d/m/Y" }} {% else %} --- {% endif %}</td>
+                        <td> 
+                            {% if t.data_final %} 
+                                {{ t.data_final|date:"d/m/Y" }} 
+                            {% else %} 
+                                <i class="fas fa-minus"></i> 
+                            {% endif %}
+                        </td>
                         <td class="text-left"> {{ t.codigo_atividade.descricao }} </td>
                         <td class="text-left"> {{ t.id_instrutor.nome }}
                         <td class="text-left"> {{ t.id_instrutor.codigo_titulo.descricao }} </td>
-                        <td class="text-left"> {{ t.matricula_monitor.nome }} </td>
+                        {% if t.matricula_monitor.nome %}
+                            <td class="text-left">{{ t.matricula_monitor.nome }}</td>
+                        {% else %} 
+                            <td class="text-center"><i class="fas fa-minus"></i></td>
+                        {% endif %}
                     </tr>
                 
                 {% endfor %}
