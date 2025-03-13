@@ -53,7 +53,7 @@
                         <th>Atividade</th>
                         <th>Instrutor</th>
                         <th>Titularidade</th>
-                        <th>Aluno Monitor</th>
+                        <th>Monitor</th>
                     </tr>
                 </thead>
 
@@ -63,15 +63,15 @@
                 {% for t in turmas %}
 
                     <tr>
-                        <td> {{ t.numero }} </td>
+                        <td class="text-center"> {{ t.numero }} </td>
                         <td> {{ t.horario_aula }} </td>
                         <td> {{ t.duracao_aula }} min </td>
-                        <td> {{ t.data_inicial }} </td>
-                        <td> {{ t.data_final }} </td>
-                        <td> {{ t.codigo_atividade.descricao }} </td>
-                        <td> {{ t.id_instrutor.nome }}
-                        <td> {{ t.id_instrutor.codigo_titulo.descricao }} </td>
-                        <td> {{ t.matricula_monitor.nome }} </td>
+                        <td> {{ t.data_inicial|date:"d/m/Y" }} </td>
+                        <td> {% if t.data_final %} {{ t.data_final|date:"d/m/Y" }} {% else %} --- {% endif %}</td>
+                        <td class="text-left"> {{ t.codigo_atividade.descricao }} </td>
+                        <td class="text-left"> {{ t.id_instrutor.nome }}
+                        <td class="text-left"> {{ t.id_instrutor.codigo_titulo.descricao }} </td>
+                        <td class="text-left"> {{ t.matricula_monitor.nome }} </td>
                     </tr>
                 
                 {% endfor %}
