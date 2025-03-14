@@ -61,6 +61,7 @@ def excluir(request, matricula):
         turma.save()        
     
     aluno.delete()
+    
     return redirect('aluno:listar')
 
 
@@ -71,7 +72,7 @@ def atualizar(request):
             
             dados_aluno = form.cleaned_data
             
-            matricula = request.POST.get('matricula')
+            matricula = dados_aluno['matricula']
 
             aluno = Aluno.objects.get(pk=matricula)
 
@@ -80,10 +81,9 @@ def atualizar(request):
             aluno.data_final = dados_aluno["data_final"]
                     
             aluno.save()    
-        else:
-            print(form.errors)  # Print form errors to the console
 
+        # imprimir no console mensagens de erro da validação do formulário        
+        # else:
+        #     print(form.errors)  # Print form errors to the console
 
-    alunos = Aluno.objects.all()
-    
-    return render(request, 'aluno/listarAluno.html', { 'alunos': alunos })
+    return redirect('aluno:listar')

@@ -25,14 +25,12 @@
     </div>
 
     <!-- formulario HTML -->
-    <form name="AlunoAtualizarForm" action="{% url 'aluno:atualizar_aluno' %}" method="post" class="my-label-color-purple">{% csrf_token %}
+    <form name="AlunoAtualizarForm" action="{% url 'aluno:atualizar_aluno' %}" method="post" class="my-label-color-purple">
         {% csrf_token %}
-
-        <input type="hidden" id="idMatriculaAluno" name="matricula" value="{{ aluno.matricula }}">  
 
         <div class="form-group">
             <label for="idMatricula" class="col-form-label">Matrícula</label>
-            <input class="form-control" type="text" id="idMatricula" name="matricula" maxlength="45" value="{{ aluno.matricula }}" readonly>  
+            <input class="form-control" type="text" id="idMatricula" name="matricula" value="{{ aluno.matricula }}" readonly>  
         </div>
 
         <div class="form-group">

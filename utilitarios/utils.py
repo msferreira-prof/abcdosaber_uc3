@@ -190,22 +190,22 @@ def popular_turma_ausencia():
     for i in range(1, 10):
         turma_aluno = TurmaAluno.objects.get(pk=gerar_numero_aleatorio_sequencia(TurmaAluno.objects.values_list('id', flat=True)))
         
-        a = turma_aluno.get(pk=1)        
-        print('alunos')
-        print()
-        print(a)
+        # a = turma_aluno.get(pk=1)        
+        # print('alunos')
+        # print()
+        # print(a)
         
-        # alunos = turma_aluno.matricula_aluno.all()
+        alunos = turma_aluno.matricula_aluno.objects.all()
         
-        # for aluno in alunos:
+        for aluno in alunos:
             
-        #     ausencia = Ausencia (
-        #             numero_turma = turma_aluno,
-        #             matricula_aluno = aluno, 
-        #             data_ausencia = turma_aluno.numero_turma.data_inicial + timedelta(days=i),
-        #         )
+            ausencia = Ausencia (
+                    numero_turma = turma_aluno,
+                    matricula_aluno = aluno, 
+                    data_ausencia = turma_aluno.numero_turma.data_inicial + timedelta(days=i),
+                )
             
-        #     lista_ausencia.append(ausencia)
+            lista_ausencia.append(ausencia)
   
-    print(lista_ausencia)          
-# Ausencia.objects.bulk_create(lista_ausencia)
+    #print(lista_ausencia)          
+    Ausencia.objects.bulk_create(lista_ausencia)
