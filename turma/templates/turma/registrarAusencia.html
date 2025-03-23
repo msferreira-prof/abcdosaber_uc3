@@ -49,12 +49,22 @@
 
         </form>
 
+    {% else %}
+
         {% if turma_alunos %}
+
             <!-- formulario HTML para registrar ausencia de alunos de uma turma -->
             <form name="frmRegistrarAusencia" action="{% url 'turma:registrar_ausencia' %}" method="post" class="my-label-color-purple">
+                {% csrf_token %}
 
                 <!-- utiliza um input "hidden" para armazerar a turma escolhida inicialmente -->
-                <input type="hidden" name="numero_turma" value="{{ numero_turma }}">
+                <input type="hidden" name="numero_turma" value="{{ turma.numero_turma }}">
+
+                <!-- montagem do combo com as turmas cadastradas que tenha aluno -->
+                <div class="form-group">
+                    <label for="idLabelTurma">Turma</label>
+                    <label id="idLabelTurma" class="form-control">Turma {{ turma.numero }} - {{ turma.horario_aula }}</option>
+                </div>
 
                 <!-- montagem do combo com os tipos de atividade -->
                 <div class="form-group">
@@ -62,7 +72,7 @@
                     <select class="form-control" id="idAlunoTurma" name="matricula_aluno">
                         <option value="0">Selecione...</option>
                         {% for aluno in turma_alunos %}
-                            <option value="{{ aluno.maricula }}">{{ aluno.nome}} </option>
+                            <option value="{{ aluno.aluno.maricula }}">{{ aluno.aluno.nome}} </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -82,16 +92,10 @@
         {% else %}
 
             <div class="text-danger">
-                <p>Não há alunos cadastrados na turma selecionada</p>
+                <p>Não há turmas com alunos matriculados</p>
             </div>
 
         {% endif %}
-    
-    {% else %}
-
-        <div class="text-danger">
-            <p>Não há turmas com alunos matriculados</p>
-        </div>
 
     {% endif %}
 

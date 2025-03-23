@@ -101,21 +101,22 @@ def carregar_ausencia_alunos(request):
     
     form = TurmaAusenciaForm(request.POST)
     if form.is_valid():
-        turma = form.cleaned_data
-    
-        print(turma["numero_turma"])
+        turma_form = form.cleaned_data
         
-        turma = TurmaAluno.objects.get(pk=turma["numero_turma"])
-        lista_alunos = turma.alunos_turmas.all().values_list('matricula_aluno', flat=True)
+        turma = Turma.objects.get(pk=turma_form['numero_turma'])
+
+        turma_alunos = TurmaAluno.objects.filter(numero_turma=turma_form['numero_turma'])
         
         contexto = {
-            'alunos': lista_alunos,        
+            'turma': turma,
+            'turma_alunos': turma_alunos,        
         }
         
         return render(request, 'turma/registrarAusencia.html', context=contexto)
     
     else: 
         print(form.errors)  # Print form errors to the console
+
 
 def registrar_ausencia(request):
     
@@ -136,5 +137,9 @@ def registrar_ausencia(request):
         
         ausencia.save()
     
-    carregar_ausencia_turma(request)
+    lista_turmas = Turma.objects.filter(turmas_alunos__isnull=False).distinct()
+    contexto = {
+        'turmas': lista_turmas,        
+    }
+    return render(request, 'turma/registrarAusencia.html', context=contexto)
     
