@@ -28,7 +28,7 @@
     {% if turmas %}
 
         <!-- formulario para escolher a turma -->
-        <form name="frmDefinirTurma" id="idFrmDefinirTurma" action="{% url 'carregar_ausencia_turma_alunos' %}" method="post" class="my-label-color-purple">
+        <form name="frmDefinirTurma" id="idFrmDefinirTurma" action="{% url 'turma:ausencia_alunos' %}" method="post" class="my-label-color-purple">
             {% csrf_token %}
 
             <!-- montagem do combo com as turmas cadastradas que tenha aluno -->
@@ -37,7 +37,7 @@
                 <select class="form-control" id="idTurma" name="numero_turma">
                     <option value="0">Selecione...</option>
                     {% for turma in turmas %}                
-                        <option value="{{ turma }}">Turma {{ turma.numeroTurma }} - {{ turma.horario_aula|time:"h:m:s"}}</option>
+                        <option value="{{ turma.numero }}">Turma {{ turma.numero }} - {{ turma.horario_aula }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -90,7 +90,7 @@
     {% else %}
 
         <div class="text-danger">
-            <p>Não há turmas cadastradas</p>
+            <p>Não há turmas com alunos matriculados</p>
         </div>
 
     {% endif %}

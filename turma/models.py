@@ -21,7 +21,8 @@ class Turma(models.Model):
         ordering = ['numero']
         
     def __str__(self):
-        return f'Turma: {self.numero}'
+        return f'Turma: {self.numero} '
+
     
 class TurmaAluno(models.Model):
     numero_turma =  models.ForeignKey(Turma, on_delete=models.CASCADE, related_name='turmas_alunos',
@@ -36,10 +37,15 @@ class TurmaAluno(models.Model):
 
     class Meta:
         ordering = ['numero_turma', 'matricula_aluno', 'id'] 
+        # definindo uma chave única para o par (numero_turma, matricula_aluno)
+        # o aluno somente pode estar matriculado uma vez na turma
+        constraints = [
+            models.UniqueConstraint(fields=['numero_turma', 'matricula_aluno'], name='unique_turma_aluno')
+        ]
         
             
     def __str__(self):
-        resposta = f'Turma: {self.numero_turma} - Aluno: {self.matricula_aluno}'
+        resposta = f'{self.numero_turma}'
         return resposta
     
     
@@ -52,9 +58,13 @@ class Ausencia(models.Model):
                                      default=timezone.now,
                                      help_text="Data da falta do aluno na turma")
 
-
     class Meta:
-        ordering = ['numero_turma', 'matricula_aluno', 'id'] 
+        ordering = ['numero_turma', 'matricula_aluno', 'data_ausencia', 'id'] 
+        # definindo uma chave única para o trio (numero_turma, matricula_aluno, data_ausencia)
+        # o aluno somente pode ter uma falta por dia na turma
+        constraints = [
+            models.UniqueConstraint(fields=['numero_turma', 'matricula_aluno', 'data_ausencia'], name='unique_ausencia_turma_aluno')
+        ]
 
     def __str__(self):
         resposta = f'Turma: {self.numero_turma} - Aluno: {self.matricula_aluno} - Dt Ausência: {self.data_ausencia.strftime("%d/%m/%y")}'

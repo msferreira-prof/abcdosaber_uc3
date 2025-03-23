@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from turma.models import Turma, Ausencia
+from turma.models import Turma, TurmaAluno, Ausencia
 from instrutor.models import Instrutor
 from tipodeatividade.models import TipoDeAtividade
 from aluno.models import Aluno
@@ -75,29 +75,47 @@ def cadastrar(request):
     
 
 # ausencia
-def carregar_ausencia_turma(request):
-    lista_turmas = Turma.objects.all()
+def carregar_ausencia(request):
+    # recupera as instancias de turmas sem duplica-las
+    lista_turmas = Turma.objects.filter(turmas_alunos__isnull=False).distinct()
+    
+# # Retrieve distinct Turma IDs from TurmaAluno
+# distinct_turma_ids = TurmaAluno.objects.values('numero_turma').distinct()
+
+# # Retrieve the actual Turma instances
+# distinct_turmas = Turma.objects.filter(numero__in=[item['numero_turma'] for item in distinct_turma_ids])
+
+# # Print the results
+# for turma in distinct_turmas:
+#     print(turma)
         
+
     contexto = {
         'turmas': lista_turmas,        
     }
+    
     return render(request, 'turma/registrarAusencia.html', context=contexto)
 
-def carregar_ausencia_turma_alunos(request):
+
+def carregar_ausencia_alunos(request):
     
     form = TurmaAusenciaForm(request.POST)
     if form.is_valid():
         turma = form.cleaned_data
     
-        turma = Turma.objects.get(pk=turma["numero_turma"])
-        lista_alunos = turma.alunos.get(pk=turma.numero)
+        print(turma["numero_turma"])
+        
+        turma = TurmaAluno.objects.get(pk=turma["numero_turma"])
+        lista_alunos = turma.alunos_turmas.all().values_list('matricula_aluno', flat=True)
         
         contexto = {
             'alunos': lista_alunos,        
         }
         
-    return render(request, 'turma/registrarAusencia.html', context=contexto)
+        return render(request, 'turma/registrarAusencia.html', context=contexto)
     
+    else: 
+        print(form.errors)  # Print form errors to the console
 
 def registrar_ausencia(request):
     
