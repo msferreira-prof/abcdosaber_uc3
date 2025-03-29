@@ -39,7 +39,7 @@ Para ativar o ambiente virtual, digite o comando abaixo no terminal do VS Code:
 .\.venv\Scripts\activate
 ```
 
-## Instalando o Django no ambiente virtua
+## Instalando o Django no ambiente virtual
 
 Para instalar a versão mais recente do Django no \*ambiente virtual\*, digite o comando abaixo:
 ```
